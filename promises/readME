@@ -1,0 +1,7 @@
+before callback we use callbacks to handle the asynchronous tasks like 
+*A promise is an object that represnets the eventual completion or failure of an asynchronous operation
+
+it has three states 
+@pending - intial state ( not yet started)
+@resolved(fullfilled) - operation completed successfully
+@Rejected - operation failure
