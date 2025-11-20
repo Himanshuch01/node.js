@@ -2,3 +2,11 @@ it is a middleware used in expresss to parse the incoming jason request body, so
 // npm install body-parser 
 
 express.json()  ------ parses incoming json request bodies
+
+
+
+*** epress validator
+is a set of express middleware that helps you to validate 
+to install ------ npm install express-validator
+
+
