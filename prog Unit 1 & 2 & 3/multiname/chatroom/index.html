@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Chat Rooms</title>
+</head>
+<body>
+  <h2>Chat with Rooms</h2>
+
+  <label>Room Name:</label>
+  <input id="roomName" placeholder="Enter room name..." />
+  <button onclick="joinRoom()">Join Room</button>
+  <button onclick="leaveRoom()">Leave Room</button>
+
+  <hr />
+
+  <input id="msgBox" placeholder="Type a message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <ul id="messages"></ul>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:3000");
+    let currentRoom = "";
+
+    // JOIN A ROOM
+    function joinRoom() {
+      const room = document.getElementById("roomName").value;
+      if (!room) return alert("Enter room name!");
+
+      socket.emit("joinRoom", room);
+      currentRoom = room;
+    }
+
+    // LEAVE A ROOM
+    function leaveRoom() {
+      if (!currentRoom) return alert("You are not in any room!");
+
+      socket.emit("leaveRoom", currentRoom);
+      currentRoom = "";
+    }
+
+    // SEND MESSAGE
+    function sendMessage() {
+      const msg = document.getElementById("msgBox").value;
+      if (!msg) return;
+
+      if (!currentRoom) return alert("Join a room first!");
+
+      socket.emit("chatMessage", {
+        room: currentRoom,
+        message: msg
+      });
+
+      document.getElementById("msgBox").value = "";
+    }
+
+    // DISPLAY MESSAGE
+    socket.on("message", (msg) => {
+      const li = document.createElement("li");
+      li.textContent = msg;
+      document.getElementById("messages").appendChild(li);
+    });
+  </script>
+</body>
+</html>

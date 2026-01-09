@@ -1,0 +1,9 @@
+//program to create middleware tp check if user is logged using a query 
+//parameter loggedin =true if not logged send access denied
+//2. program middleware applied only on admin route check if role =admin
+// if not admin send not authorized.
+//3/ by using express where middleware checks if name and age are present
+// in req.body if missing send invalid.
+//4 error handling middleware if any route throws an errorthen middleware
+//should send something went wrong and login error.
+//5. calculate the time taken to handle each request and log in

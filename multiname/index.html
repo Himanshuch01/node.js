@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Chat</title>
+</head>
+<body>
+
+  <h1>Simple Chat</h1>
+
+  <!-- Ask Username -->
+  <input id="username" placeholder="Enter your name..." />
+  <button onclick="setUser()">Save Name</button>
+
+  <br><br>
+
+  <input id="msg" placeholder="Type message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <ul id="messages"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    const socket = io();
+    let user = "";
+
+    function setUser() {
+      user = document.getElementById("username").value.trim();
+      if (user === "") {
+        alert("Please enter your name");
+        return;
+      }
+      alert("Username saved: " + user);
+    }
+
+    function sendMessage() {
+      const msg = document.getElementById("msg").value;
+
+      if (!user) {
+        alert("Please enter your username first!");
+        return;
+      }
+
+      socket.emit("chatMessage", {
+        user: user,
+        text: msg
+      });
+
+      document.getElementById("msg").value = "";
+    }
+
+    socket.on("chatMessage", (data) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
+      document.getElementById("messages").appendChild(li);
+    });
+  </script>
+
+</body>
+</html>
